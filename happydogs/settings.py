@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import os
+from decouple import config
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,14 +26,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vm!1t7(7t2m5x=312qpl_k0^02xzyx6d%d72@kuftmwlc1zc2#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default = True)
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -117,4 +122,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+
+# static(css,js,images) settings starts here
+STATIC_URL = config('STATIC_URL','/static/')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
+# static(css,js,images) settings ends here
+
+
+# media settings starts here
+MEDIA_URL = config('MEDIA_URL','/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# media settings ends here
