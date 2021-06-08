@@ -1,0 +1,126 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load date_tag %}
+
+{% block content %}
+
+{% block title %}
+<title>HappyDog Listing</title>
+
+{% endblock %}
+
+<main class="content">
+   <div class="container-fluid p-0">
+      <div class="row">
+         <div class="col-12">
+            <div class="card">
+               <div class="card-header">
+                {% if msg %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                     <div class="alert-message">
+                        <strong>Success ! </strong> {{ msg }}
+                     </div>
+                  </div>
+
+                {% endif %}
+
+                {% if success_msg %}
+                <div class="alert alert-primary alert-dismissible" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                   </button>
+                   <div class="alert-message">
+                      <strong>Error ! </strong>{{ success_msg }}
+                   </div>
+                </div>
+
+                {% endif %}
+
+                  <h5 class="card-title">Dog Managing</h5>
+                  <a href="{% url 'AddNewDog' %}"> <button class="btn btn-success float-right"
+                        id="nex_buttton" >Add Dog</button></a>
+
+               </div>
+               <div class="card-body">
+                    <table id="datatables-basic" class="table table-striped" style="width:100%">
+                     <thead>
+                        <tr>
+                           <th>Serial No.</th>
+                           <th>Dog First Name</th>
+                           <th>Dog Last Name</th>
+                           <th>Created On</th>
+                           <th>Updated On</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for one in all_dogs %}
+                        <tr>
+                           <td>{{forloop.counter}}</td>
+                           <td>{{one.firstname}}</td>
+                           <td>{% if one.lastname %} {{one.lastname}} {% else %} ----- {% endif %}</td>
+                           <td>{{one.created_on|date_exact}}</td>
+                           <td>{{one.updated_on|date_exact}}</td>
+
+                                        <td>
+
+<!--                                             <label class="switch ml-1">
+                                            <a href="/admin_access/fund_edit/?fund_id={{one.id}}" style="color: #3e7fc1" title="edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            </label>
+ -->                                           <label class="switch ml-1">
+                                              <a href="#" data-id="{{one.id}}" class="delete_dog" style="color: #3e7fc1" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            </label>
+<!--                                             <label class="switch">
+                                          <input class="root" data-id="{{one.id}}"  type="checkbox" {% if one.is_active is True %}
+                                          checked {% else %} unchecked {% endif %}>
+                                          <span  data-toggle="popover" data-trigger="hover" data-placement="top" {% if one.is_active is True %}
+                                          data-content="Active" {% else %} data-content="Inactive" {% endif %}class="slider round" style="background-color:#2a72d2"></span>
+                                            </label>
+ -->                                        </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+
+<script type="text/javascript">
+      $('.delete_dog').click(function(){
+       swal({
+     
+          title : "Confirmation",
+          text : "Are you sure you want to Delete ?",
+          buttons : {
+             cancel : true,
+             confirm : "Confirm"
+          }
+     
+     
+       }).then(val =>{
+
+        var ids = $(this).attr('data-id');
+        if (val){
+            var url = '/delete_dog/?delete_id='+ids; 
+            window.location.href = url
+
+             swal({
+                title : "Deleted !",
+                text : "You have Sucessfully Delete this Record",
+                icon : "success"
+     
+             })
+          }
+       })
+     
+     })
+
+
+</script>
+{% endblock %}

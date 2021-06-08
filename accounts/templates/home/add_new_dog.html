@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Dog Add</title>
+{% endblock %}
+<main class="content">
+   <div class="container-fluid p-0">
+      <div class="row">
+         <div class="col-md-1">
+         </div>
+         <div class="col-md-9 col-xl-10">
+            <div class="tab-content">
+               <div class="tab-pane fade show active" id="account" role="tabpanel">
+                  <div class="card">
+                     <div class="card-header">
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if 'success' in message.tags %}
+                        <div class="alert alert-primary alert-dismissible" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                           </button>
+                           <div class="alert-message">
+                              <strong>Success ! </strong> {{ message }}
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if 'error' in message.tags %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                           </button>
+                           <div class="alert-message">
+                              <strong>Error ! </strong>{{ message }}
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        <h5 class="card-title mb-0">Dog Add</h5>
+                     </div>
+                     <div class="card-body">
+                        <form method="post" id="add_new_dog_form_id" action="/add_new_dog/">
+                           {% csrf_token %}
+                           <div class="form-row">
+                              <div class="form-group col-md-6">
+                                 <label for="inputFirstName">Dog First Name</label>
+                                 <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Dog First Name" onkeyup="FirstName()" minlength="3" maxlength="100">
+                                 <span  class="error-msg"
+                                    id="label_first_name"></span>
+                              </div>
+                              <div class="form-group col-md-6">
+                                 <label for="inputFirstName">Dog Last Name</label>
+                                 <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Dog Last Name" minlength="3" maxlength="100">
+                                 <span  class="error-msg"
+                                    id="label_last_name"></span>
+                              </div>
+                           </div>
+                           <button type="submit" class="btn btn-primary">Dog Add</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+<script src="{% static 'js/dog/add_dog.js' %}"></script>
+{% endblock %}

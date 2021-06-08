@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Visits Add</title>
+{% endblock %}
+<main class="content">
+   <div class="container-fluid p-0">
+      <div class="row">
+         <div class="col-md-1">
+         </div>
+         <div class="col-md-9 col-xl-10">
+            <div class="tab-content">
+               <div class="tab-pane fade show active" id="account" role="tabpanel">
+                  <div class="card">
+                     <div class="card-header">
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if 'success' in message.tags %}
+                        <div class="alert alert-primary alert-dismissible" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                           </button>
+                           <div class="alert-message">
+                              <strong>Success ! </strong> {{ message }}
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if 'error' in message.tags %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                           </button>
+                           <div class="alert-message">
+                              <strong>Error ! </strong>{{ message }}
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        <h5 class="card-title mb-0">Visits Add</h5>
+                     </div>
+                     <div class="card-body">
+                        <form method="post" id="add_new_visit_form_id" enctype="multipart/form-data" action="/add_new_visit/">
+                           {% csrf_token %}
+                           <div class="form-row">
+                              <div class="form-group col-md-6">
+                                 <label for="inputFirstName">Start Date</label>
+                                 <input type="date" class="form-control" id="start_date" name="start_date" onchange="StartDate()">
+                                 <span  class="error-msg"
+                                    id="label_start_date"></span>
+                              </div>
+                              <div class="form-group col-md-6">
+                                 <label for="inputFirstName">End Date</label>
+                                 <input type="date" class="form-control" id="end_date" name="end_date" onchange="">
+                                 <span  class="error-msg"
+                                    id="label_end_date"></span>
+                              </div>
+                           </div>
+                           <div class="form-row">
+                              <div class="form-group col-md-6">
+                                 <label for="inputLastName">Select Dog</label>
+                                 <select name="dog_id" id = "dog" class="wpcf7-form-control wpcf7-select wpcf7-validates-as-required form-control" onchange="DogChecking()">
+                                    <option value="">Select Dog</option>
+                                    {% for one in all_dogs %}
+                                    <option value="{{one.id}}">{{one.firstname|capfirst}} {{one.lastname|capfirst}}</option>
+                                    {% endfor %}
+
+                                 </select>
+                                 <span  class="error-msg"
+                                    id="dog_label"></span>
+                              </div>
+
+                           </div>
+                           <button type="submit" class="btn btn-primary">Visit Add</button>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+<script src="{% static 'js/dog/add_visit.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,240 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --primary-color: #212121;
+  --white-color: #fff;
+}
+
+.container {
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 15px;
+  width: 100%;
+}
+header .custom-nav {
+  background: var(--primary-color);
+}
+header .custom-nav ul li a {
+  transition: 150ms linear;
+}
+header .logo {
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+section {
+  padding: 5rem 0;
+}
+.custom-form form {
+  display: flex;
+  max-width: 600px;
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+.custom-form form > div {
+  max-width: 200px;
+  margin: auto;
+}
+.custom-form form > div input[type="button"] {
+  border: 0;
+  background: var(--primary-color);
+  color: var(--white-color);
+  padding: 10px 30px;
+  cursor: pointer;
+}
+.custom-form form > div input,
+.custom-form form > div input::placeholder {
+  text-align: center;
+}
+.custom-form .datepicker-date-display {
+  background: var(--primary-color);
+  color: var(--white-color);
+}
+.datepicker-date-display .year-text,
+.datepicker-date-display .date-text {
+  color: #777;
+}
+.custom-form .datepicker-table td.is-selected,
+.is-today {
+  background: var(--primary-color);
+  color: var(--white-color);
+}
+
+.custom-form .datepicker-table button:focus {
+  background: transparent;
+}
+
+td.is-selected button,
+.is-today button {
+  color: var(--white-color);
+}
+.datepicker-cancel,
+.datepicker-clear,
+.datepicker-today,
+.datepicker-done {
+  color: var(--secondary-color);
+}
+.custom-form .month-prev:focus,
+.custom-form .month-next:focus {
+  background: transparent;
+}
+.custom-calendar {
+  padding: 1rem 2rem;
+  text-align: center;
+  max-width: 650px;
+  width: 100%;
+  margin: 1rem auto;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  border-radius: 5px;
+}
+.custom-calendar .day-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  padding: 1rem 0;
+  margin: 0.5rem 0;
+  background: #eaeaea;
+}
+.custom-calendar .date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.custom-calendar .date-grid a {
+  border: 0;
+  background: #fff;
+  min-height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+}
+.custom-calendar .date-grid .unactive {
+  color: #999;
+}
+.custom-calendar .date-grid a.current-day {
+  background: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 3px;
+  position: relative;
+}
+.custom-calendar .month-indicator {
+  margin-bottom: 1rem;
+}
+.custom-calendar .month-indicator time {
+  font-size: 18px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+.custom-calendar .current-day-info {
+  display: none;
+}
+.custom-calendar .current-day-info span {
+  margin: 0 8px;
+  font-size: 14px;
+  margin-bottom: 0px;
+  line-height: 20px;
+}
+.custom-calendar .current-day-info span:before {
+  content: url("../img//pawprint.svg");
+  z-index: 99;
+  position: relative;
+  top: 4px;
+  left: -8px;
+}
+.custom-calendar .current-day:hover .current-day-info {
+  display: block;
+  position: absolute;
+  top: -30px;
+  left: 30px;
+  min-width: 125px;
+  background: var(--white-color);
+  color: var(--primary-color);
+  padding: 10px;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.custom-dog-list {
+  padding: 5rem 0;
+}
+.custom-dog-list tr th,
+.custom-dog-list tr td {
+  text-align: center;
+}
+footer {
+  background: var(--primary-color);
+  color: var(--white-color);
+  text-align: center;
+  padding: 10px;
+}
+footer span {
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  header .logo {
+    font-size: 20px;
+  }
+  .custom-form form > div {
+    width: 125px;
+  }
+  .custom-calendar {
+    padding: 0;
+  }
+  .custom-calendar .date-grid button {
+    min-height: 50px;
+  }
+  .custom-calendar .day-of-week {
+    font-size: 14px;
+  }
+  .custom-dog-list {
+    padding: 3rem 0;
+  }
+  section {
+    padding: 3rem 0;
+  }
+  .custom-form form {
+    flex-direction: column;
+  }
+  .custom-form form > div input[type="button"] {
+    margin: 15px auto;
+    width: 100%;
+  }
+  .custom-dog-list {
+    overflow: hidden;
+  }
+  .custom-dog-list .container {
+    overflow: scroll;
+  }
+  .custom-dog-list table thead th,
+  .custom-dog-list table tbody tr td {
+    min-width: 150px;
+    font-size: 14px;
+    text-align: left;
+  }
+  .custom-calendar .current-day:hover .current-day-info {
+    top: -40px;
+    left: -10px;
+    min-width: 100px;
+    padding: 10px 5px;
+  }
+  .custom-calendar .current-day-info span {
+    font-size: 13px;
+    margin: 0 4px;
+  }
+}
