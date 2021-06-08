@@ -1,0 +1,126 @@
+{% load static %}
+{% load main_fun %}
+{% load date_tag %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <title>Happy Dogs</title>
+</head>
+<body>
+    <!-- Header start  -->
+    <header>
+        <nav class="custom-nav">
+           <div class="container">
+                <div class="nav-wrapper">
+                    <a href="#" class="logo">Happy Dogs</a>
+                    <ul id="nav-mobile" class="right">
+                        {% if request.user.is_authenticated %}
+                        <li><a href="/list_dogs/">Dashboard</a></li>
+                        <li><a href="#" id="logout_popup">Logout</a></li>
+                        {% else %}
+                        <li><a href="/login_admin/">Login</a></li>
+                        {% endif %}
+
+
+                    </ul>
+                </div>
+           </div>
+        </nav>
+    </header>
+    <!-- Header close  -->
+
+    <section>
+
+      <div class="custom-dog-list">
+        <div class="container">
+            <table class="striped">
+                <thead>
+                    <tr>
+                       <th>Serial No.</th>
+                       <th>Dog Full Name</th>
+                       <th>Start Date</th>
+                       <th>End Date</th>
+                       <th>Created On</th>
+                    </tr>
+                </thead>
+            
+                <tbody>
+                    {% if one_day_visits %}
+                    {% for one in one_day_visits %}
+                    <tr>
+                       <td>{{forloop.counter}}</td>
+                       <td>{{one.dog_instance.firstname|capfirst}} {{one.dog_instance.lastname|capfirst}}</td>
+                       <td>{{one.start_date|date_exact}} </td>
+                       <td>{{one.end_date|date_exact}}</td>
+                       <td>{{one.dog_instance.updated_on|date_exact}}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                       <td>----</td>
+                       <td>----</td>
+                       <td>----</td>
+                       <td>----</td>
+                       <td>----</td>
+
+                    {% endif %}
+
+                </tbody>
+            </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer starts -->
+    <footer>
+            <span>Happy Dogs &copy; 2021</span>
+    </footer>
+    <!-- footer ends -->
+
+
+    <!-- Compiled and minified JavaScript -->
+
+    <script src="{% static 'js/library/sweetalert.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+      <script type="text/javascript">
+         $('#logout_popup').click(function(){
+           swal({
+         
+              title : "Confirmation",
+              text : "Are you sure you want to Logout ?",
+              buttons : {
+                 cancel : true,
+                 confirm : "Confirm"
+              }
+         
+         
+           }).then(val =>{
+              
+              if (val){
+               var url = "/logout_admin/";
+         
+                 window.location.href = url
+                 swal({
+                    title : "Thanks !",
+                    text : "You have Sucessfully Logout Your Account",
+                    icon : "success"
+         
+                 })
+              }
+           })
+         
+         })
+      </script>
+
+</body>
+</html>

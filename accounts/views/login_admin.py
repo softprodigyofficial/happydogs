@@ -24,6 +24,7 @@ class LoginAdminView(View):
 
 		try :
 			## getting all required data and render one html on browser with all those params
+			context['success_msg'] = self.request.GET.get('sucess_msg')
 			return render(request,self.templates_name,context)
 			## ends here getting all required data and render one html on browser with all those keys
 
@@ -104,8 +105,22 @@ class LoginAdminView(View):
 ## function start from here if you want to hit logout request
 class LogoutAdminView(View):
 
-	def get(self,request):
+	''' Demonstrate docstring for confirming that this django view based function will hit when admin wants to logout with his account 
+	it will return error message if anything will wrong, else it will redirect user to home page screen with admin sidewar  '''
 
-		logout(request)
-		return redirect('/login_admin/?sucess_msg=Success ! Your Account has been Successfully Logout')
+
+	def get(self,request):
+		try:
+			logout(request)
+			return redirect('/login_admin/?sucess_msg=Success ! Your Account has been Successfully Logout')
+		except Exception as e:
+			print("\n" * 3)
+			print(e)
+			print("\n" * 3)
+			## if exception will occur then this block will hit
+			print(e)
+			context['msg'] = 'Something Went Wrong, Please Try Again or Contact Us'
+			## getting one error message and render one html on browser with that message
+			return render(request,'login/admin_login.html',context)
+
 ## function start from here if you want to hit logout request

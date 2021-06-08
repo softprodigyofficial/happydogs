@@ -1,0 +1,117 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load date_tag %}
+
+{% block content %}
+
+{% block title %}
+<title>Visit Dogs Listing</title>
+
+{% endblock %}
+
+<main class="content">
+   <div class="container-fluid p-0">
+      <div class="row">
+         <div class="col-12">
+            <div class="card">
+               <div class="card-header">
+                {% if msg %}
+                  <div class="alert alert-danger alert-dismissible" role="alert">
+                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                     <div class="alert-message">
+                        <strong>Success ! </strong> {{ msg }}
+                     </div>
+                  </div>
+
+                {% endif %}
+
+                {% if success_msg %}
+                <div class="alert alert-primary alert-dismissible" role="alert">
+                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                   </button>
+                   <div class="alert-message">
+                      <strong>Error ! </strong>{{ success_msg }}
+                   </div>
+                </div>
+
+                {% endif %}
+
+                  <h5 class="card-title">Visit Managing</h5>
+                  <a href="{% url 'AddNewVisit' %}"> <button class="btn btn-success float-right"
+                        id="nex_buttton" >Add Visit</button></a>
+
+               </div>
+               <div class="card-body">
+                    <table id="datatables-basic" class="table table-striped" style="width:100%">
+                     <thead>
+                        <tr>
+                           <th>Serial No.</th>
+                           <th>Dog Full Name</th>
+                           <th>Start Date</th>
+                           <th>End Date</th>
+                           <th>Created On</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for one in all_visits %}
+                        <tr>
+                           <td>{{forloop.counter}}</td>
+                           <td>{{one.dog_instance.firstname|capfirst}} {{one.dog_instance.lastname|capfirst}}</td>
+                           <td>{{one.start_date|date_exact}} </td>
+                           <td>{{one.end_date|date_exact}}</td>
+                           <td>{{one.dog_instance.updated_on|date_exact}}</td>
+
+                                        <td>
+
+                                         <label class="switch ml-1">
+                                              <a href="#" data-id="{{one.id}}" class="delete_visit" style="color: #3e7fc1" title="Delete"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                            </label>
+                                     </td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+
+<script type="text/javascript">
+      $('.delete_visit').click(function(){
+       swal({
+     
+          title : "Confirmation",
+          text : "Are you sure you want to Delete ?",
+          buttons : {
+             cancel : true,
+             confirm : "Confirm"
+          }
+     
+     
+       }).then(val =>{
+
+        var ids = $(this).attr('data-id');
+        if (val){
+            var url = '/delete_visit/?delete_id='+ids; 
+            window.location.href = url
+
+             swal({
+                title : "Deleted !",
+                text : "You have Sucessfully Delete this Record",
+                icon : "success"
+     
+             })
+          }
+       })
+     
+     })
+
+
+</script>
+{% endblock %}

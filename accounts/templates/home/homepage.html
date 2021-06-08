@@ -1,0 +1,143 @@
+{% load static %}
+{% load main_fun %}
+{% load date_tag %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <link rel="stylesheet" href="{% static '/css/style.css' %}">
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <title>Happy Dogs</title>
+      <style type="text/css">
+         .custom-form form > div input[type="submit"] {
+         border: 0;
+         background: var(--primary-color);
+         color: var(--white-color);
+         padding: 10px 30px;
+         cursor: pointer;
+         }
+      </style>
+   </head>
+   <body>
+      <!-- Header start  -->
+      <header>
+         <nav class="custom-nav">
+            <div class="container">
+               <div class="nav-wrapper">
+                  <a href="#" class="logo">Happy Dogs</a>
+                  <ul id="nav-mobile" class="right">
+                     {% if request.user.is_authenticated %}
+                     <li><a href="/list_dogs/">Dashboard</a></li>
+                     <li><a href="#" id="logout_popup">Logout</a></li>
+                     {% else %}
+                     <li><a href="/login_admin/">Login</a></li>
+                     {% endif %}
+                  </ul>
+               </div>
+            </div>
+         </nav>
+      </header>
+      <!-- Header close  -->
+      <section>
+         <div class="container">
+            <div class="custom-form">
+               {% if messages %}
+               {% for message in messages %}
+               {% if 'success' in message.tags %}
+               <div class="alert alert-success">{{message}}</div>
+               {% endif %}
+               {% endfor %}
+               {% endif %}
+               {% if messages %}
+               {% for message in messages %}
+               {% if 'error' in message.tags %}
+               <div class="alert alert-danger">{{message}}</div>
+               {% endif %}
+               {% endfor %}
+               {% endif %}
+               <form action="/" method="post">
+                  {% csrf_token %}
+                  <div> <input type="text" placeholder="From" class="datepicker" name="start_date" required></div>
+                  <div><input type="text" placeholder="To" class="datepicker" name="end_date" required></div>
+                  <div><input type="submit" value="Search"></div>
+               </form>
+            </div>
+            <div class="custom-calendar">
+               <div class="month-indicator">
+                  <time datetime=""> {{getting_ist_day_of_this_month|date_exact}} - {{last_day_of_this_month|date_exact}}</time>
+               </div>
+               <div>
+                  <div class="day-of-week">
+                     <div>MON</div>
+                     <div>TUE</div>
+                     <div>WED</div>
+                     <div>THU</div>
+                     <div>FRI</div>
+                     <div>SAT</div>
+                     <div>SUN</div>
+                  </div>
+                  <div class="date-grid">
+                     {% for one in date_range_list %}
+                     <a href="/one_day_data/?one_Day={{one|date_exact}}" {% if one == today %} class="current-day new_Active" {% else %}  class="new_Active" {% endif %} >{{one|day_date}}
+                     <div class="current-day-info" >
+                        <span class="current-day-info" data-id = {{one}}>{{one|get_total_dogs}} dogs</span>
+                     </div>
+                     </a>
+                     {% endfor %}
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- footer starts -->
+      <footer>
+         <span>Happy Dogs &copy; 2021</span>
+      </footer>
+      <!-- footer ends -->
+      <!-- Compiled and minified JavaScript -->
+      <script src="{% static 'js/library/sweetalert.min.js' %}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script src="{% static 'js/main.js' %}"></script>
+      <script type="text/javascript">
+         $('#logout_popup').click(function(){
+           swal({
+         
+              title : "Confirmation",
+              text : "Are you sure you want to Logout ?",
+              buttons : {
+                 cancel : true,
+                 confirm : "Confirm"
+              }
+         
+         
+           }).then(val =>{
+              
+              if (val){
+               var url = "/logout_admin/";
+         
+                 window.location.href = url
+                 swal({
+                    title : "Thanks !",
+                    text : "You have Sucessfully Logout Your Account",
+                    icon : "success"
+         
+                 })
+              }
+           })
+         
+         })
+      </script>
+      <script type="text/javascript">
+         $(".new_Active").hover(function(){
+           $('.new_Active').removeClass('current-day');
+         
+           $(this).addClass('current-day');
+         
+         })
+      </script>
+   </body>
+</html>

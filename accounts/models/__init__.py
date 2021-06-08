@@ -1,2 +1,3 @@
+from .dog import DogInformation,VistiForDogs
 
-__all__ = []
+__all__ = ['DogInformation','VistiForDogs']
